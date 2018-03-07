@@ -9,7 +9,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+      "picture",
+      "image",
+      "resize"
+  ],
   "author": "EstevanTn",
   "license": "ISC",
   "repository": {

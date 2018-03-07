@@ -9,13 +9,13 @@ use Tunaqui\Utils\Objects;
 
 class Picture {
 
-    var $fileInfo;
+    var $fileInfo = null;
     var $urlFilename;
     var $saveDirname;
     var $saveFilename;
     var $fileContent;
 
-    public function download($urlFilename) 
+    public function download($urlFilename)
     {
         try {
             $this->urlFilename = $urlFilename;
@@ -28,11 +28,11 @@ class Picture {
             curl_close($curl);
             return true;
         } catch(Exception $ex) {
-            throw new PictureDownloadException($this->urlFilename, $ex);            
+            throw new PictureDownloadException($this->urlFilename, $ex);
         }
     }
 
-    public function save($saveDir='../download/') 
+    public function save($saveDir='../download/')
     {
         try {
             if(!file_exists($saveDir)) {
@@ -40,16 +40,20 @@ class Picture {
             }
             $this->saveDirname = $saveDir;
             $this->saveFilename = Strings::placeholder('{0}{1}', $this->saveDirname, $this->fileInfo->basename);
-            $downloadFile = fopen($this->saveFilename, 'wb');
-            fwrite($downloadFile, $this->fileContent);
-            fclose($downloadFile);
+            $this->writeImage($this->saveFilename, $this->fileContent);
             return true;
         } catch(Exception $ex) {
             throw new PictureSaveException($this->urlFilename, $this->saveDirname, $ex);
         }
     }
-    
-    public function info() 
+
+    public function writeImage($filename, $fileContent) {
+        $downloadFile = fopen($filename, 'wb');
+        fwrite($downloadFile, $fileContent);
+        fclose($downloadFile);
+    }
+
+    public function info()
     {
         return $this->fileInfo;
     }

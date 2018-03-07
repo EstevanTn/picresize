@@ -1,19 +1,8 @@
 # picresize
 
-## Structure
+PicResize a small library that allows you to download images from a URL, store them and resize them.
 
-If any of the following are applicable to your project, then the directory structure should follow industry best practices by being named the following.
-
-```
-bin/        
-config/
-src/
-tests/
-vendor/
-```
-
-
-## Install
+## Installation
 
 Via Composer
 
@@ -21,27 +10,45 @@ Via Composer
 $ composer require tunaqui/picresize
 ```
 
+Install vendor
+
+``` bash
+$ composer install
+```
+
 ## Usage
 
+Download an image from a URL and store it in a directory.
 ``` php
-$img = new \Tunaqui\PicResize\PictureResize('http://nisleen.com/images/logo.png');
+$image = new \Tunaqui\PicResize\Picture();
+$image->download('http://nisleen.com/images/logo.png');
+$image->save('../download/');
+```
+
+Download an image from a URL, store it in a directory and resize.
+``` php
+$image = new \Tunaqui\PicResize\PictureResize('http://nisleen.com/images/logo.png', '../download/');
+$image->resize(150, 150);
+echo $image->response();
+```
+
+Create a thumbnail.
+``` php
+$img = new \Tunaqui\PicResize\PictureResize('../download/logo.png');
 $img->thumbnail(100);
 $img->show();
 ```
 
-## Testing
-
-``` bash
-$ composer test
+Create a thumbnail and save.
+``` php
+$img = new \Tunaqui\PicResize\PictureResize('../download/logo.png');
+$img->thumbnail(100);
+$img->saveNewSize();
 ```
-
-## Security
-
-If you discover any security related issues, please email tumenaquiche@gmail.com instead of using the issue tracker.
 
 ## Credits
 
-- [EstevanTn][link-author]
+- [EstevanTn](https://gitlab.com/EstevanTn)
 
 ## License
 
