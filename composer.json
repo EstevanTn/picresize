@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "tunaqui\\picresize\\": "src"
+            "Tunaqui\\PicResize\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "tunaqui\\picresize\\": "tests"
+            "Tunaqui\\PicResize\\": "tests"
         }
     },
     "scripts": {
