@@ -3,6 +3,7 @@ namespace Tunaqui\PicResize;
 
 class ExampleTest extends \PHPUnit\Framework\TestCase
 {
+
     /**
      * Test that true does in fact equal true
      */
@@ -13,7 +14,9 @@ class ExampleTest extends \PHPUnit\Framework\TestCase
         require '../vendor/autoload.php';
         $img = new \Tunaqui\PicResize\PictureResize('../download/logo.png');
         $img->thumbnail(100);
-        $img->saveNewSize();
+        //$img->saveNewSize();
+        $img->show();
         $this->assertTrue(true);
     }
+
 }

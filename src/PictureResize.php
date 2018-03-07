@@ -23,6 +23,8 @@ class PictureResize extends Picture {
             $this->save($saveDir);
         } else {
             $this->saveFilename = $urlFilename;
+            $this->fileInfo = Objects::fromArray(pathinfo($this->saveFilename));
+            $this->saveDirname = dirname($this->saveFilename).'/';
         }
         $this->image = Image::make($this->saveFilename);
         $this->result = $this->image;
@@ -35,6 +37,8 @@ class PictureResize extends Picture {
     }
 
     public function autoSize($w, $h=null, $upsize=false) {
+        $this->width = is_null($w) ? 'auto' : $w;
+        $this->height = is_null($h) ? 'auto' : $h;
         $this->result = $this->image->resize($w, $h, function($constraint) {
             $constraint->aspectRatio();
             if($upsize) {
@@ -52,15 +56,15 @@ class PictureResize extends Picture {
     }
 
     public function show() {
+        header(Strings::placeholder('Content-Type: image/{0}', $this->fileInfo->extension));
+        $filename = Strings::placeholder('{0}_{1}x{2}.{3}', $this->fileInfo->filename, $this->width, $this->height, $this->fileInfo->extension);
+        header(Strings::placeholder('Content-Disposition: inline; filename=\'{0}\'', $filename));
+        header(Strings::placeholder('Content-Description: {0}', $filename));
         echo($this->response());
     }
 
     public function saveNewSize() {
         try {
-            if(!$this->external) {
-                $this->fileInfo = Objects::fromArray(pathinfo($this->saveFilename));
-                $this->saveDirname = dirname($this->saveFilename).'/';
-            }
             if(!file_exists($this->saveDirname)) {
                 mkdir($this->saveDirname, 0777, true);
             }
