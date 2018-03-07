@@ -39,7 +39,7 @@ class PictureResize extends Picture {
     public function autoSize($w, $h=null, $upsize=false) {
         $this->width = is_null($w) ? 'auto' : $w;
         $this->height = is_null($h) ? 'auto' : $h;
-        $this->result = $this->image->resize($w, $h, function($constraint) {
+        $this->result = $this->image->resize($w, $h, function($constraint) use($upsize) {
             $constraint->aspectRatio();
             if($upsize) {
                 $constraint->upsize();
