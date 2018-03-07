@@ -32,14 +32,18 @@ class Picture {
         }
     }
 
-    public function save($saveDir='../download/')
+    public function save($saveDir='../download/', $rename = null)
     {
         try {
             if(!file_exists($saveDir)) {
                 mkdir($saveDir, 0777, true);
             }
             $this->saveDirname = $saveDir;
-            $this->saveFilename = Strings::placeholder('{0}{1}', $this->saveDirname, $this->fileInfo->basename);
+            if(is_null($rename)) {
+                $this->saveFilename = Strings::placeholder('{0}{1}', $this->saveDirname, Strings::slug($this->fileInfo->basename));
+            } else {
+                $this->saveFilename = Strings::placeholder('{0}{1}.{2}', $this->saveDirname, Strings::slug($rename), $this->fileInfo->extension);
+            }
             $this->writeImage($this->saveFilename, $this->fileContent);
             return true;
         } catch(Exception $ex) {

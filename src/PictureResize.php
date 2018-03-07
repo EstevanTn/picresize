@@ -14,13 +14,13 @@ class PictureResize extends Picture {
     var $height;
     var $width;
 
-    public function __construct($urlFilename, $saveDir='../download/')
+    public function __construct($urlFilename, $saveDir='../download/', $rename = null)
     {
         $urlInfo = parse_url($urlFilename);
         $this->external = !empty($urlInfo['scheme']) && ($urlInfo['scheme'] === 'http' || $urlInfo['scheme'] === 'https');
         if($this->external) {
             $this->download($urlFilename);
-            $this->save($saveDir);
+            $this->save($saveDir, $rename);
         } else {
             $this->saveFilename = $urlFilename;
             $this->fileInfo = Objects::fromArray(pathinfo($this->saveFilename));
