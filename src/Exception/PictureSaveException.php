@@ -2,6 +2,7 @@
 namespace Tunaqui\PicResize\Exception;
 
 use Exception;
+use Throwable;
 use Tunaqui\Utils\Strings;
 
 class PictureSaveException extends Exception {
